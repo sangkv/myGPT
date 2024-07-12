@@ -1,0 +1,40 @@
+I. Train
+
+1. Data process:
+
+python data/shakespeare_char/prepare.py
+
+2. Train with CPU:
+
+python train.py config/train_shakespeare_char.py --device=cpu --compile=False --eval_iters=20 --log_interval=1 --block_size=64 --batch_size=12 --n_layer=4 --n_head=4 --n_embd=128 --max_iters=2000 --lr_decay_iters=2000 --dropout=0.0
+
+3. Test with CPU:
+
+python sample.py --out_dir=out-shakespeare-char --device=cpu
+
+
+II. Fine-tuning GPT 124M
+
+1. Data process:
+
+python data/shakespeare/prepare.py
+
+2. Finetuning with GPU
+
+python train.py config/finetune_shakespeare.py --init_from=gpt2 --compile=False
+
+3. Test with GPU:
+
+python sample.py --out_dir=out-shakespeare
+
+
+III. Load GPT2 Pre-trained and zero-shot
+
+python sample.py \
+    --init_from=gpt2 \
+    --device=cpu \
+    --start="What is the answer to life, the universe, and everything?" \
+    --num_samples=1 --max_new_tokens=100
+
+
+IV.
